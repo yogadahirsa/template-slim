@@ -43,6 +43,7 @@ $container->set('view', function () {
 
 $app = AppFactory::create();
 $app->setBasePath($GLOBALS['basePath']);
+$app->add(TwigMiddleware::createFromContainer($app));
 
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hello world!");
