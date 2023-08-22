@@ -121,8 +121,11 @@ $app->group('', function (RouteCollectorProxy $group) {
     });
 
     $group->get('/dashboard', function (Request $request, Response $response, $args) {
+        $db = $this->get('db')::connection('db');
+        $result = $this->get('myMedia')->getList($db);
         $v = $this->get('view')->render($response, 'dashboard.html', [
             'title' => 'Dashboard',
+            'jumlah' => count($result),
         ]);
         return $v;
     })->setName('dashboard');
@@ -253,12 +256,19 @@ $app->group('', function (RouteCollectorProxy $group) {
         $obj->link_artikel2 = $param['link_artikel2'];
         $obj->link_artikel3 = $param['link_artikel3'];
 
-        $cek = $this->get('myMedia')->getPenilaiaByPendaftarId($db, $param['mid']);
-        if ($cek) {
-            $re = $this->get('myMedia')->updateKinerja($db, $param['mid'], $_SESSION['media_id'], json_encode($obj));
+        if (isset($param['jumlah_artikel'])) {
+            $jml = $param['jumlah_artikel'];
         }
         else {
-            $re = $this->get('myMedia')->insertKinerja($db, $param['mid'], $_SESSION['media_id'], json_encode($obj));
+            $jml = 0;
+        }
+
+        $cek = $this->get('myMedia')->getPenilaiaByPendaftarId($db, $param['mid']);
+        if ($cek) {
+            $re = $this->get('myMedia')->updateKinerja($db, $param['mid'], $_SESSION['media_id'], json_encode($obj), $jml);
+        }
+        else {
+            $re = $this->get('myMedia')->insertKinerja($db, $param['mid'], $_SESSION['media_id'], json_encode($obj), $jml);
         }
         
         $result['status'] = 1;

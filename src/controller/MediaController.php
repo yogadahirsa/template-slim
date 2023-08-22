@@ -142,21 +142,23 @@ class MediaController {
         }
     }
 
-    public function insertKinerja($db, $pendaftar_id, $penilai_id, $json) {
+    public function insertKinerja($db, $pendaftar_id, $penilai_id, $json, $jml) {
         $result = $db->table('penilaian')->insertGetId([
             'pendaftar_id' => $pendaftar_id,
             'penilai_id' => $penilai_id,
             'penilaian_kinerja' => $json,
+            'jumlah_artikel' => $jml,
         ]);
 
         return $result;
     }
 
-    public function updateKinerja($db, $pendaftar_id, $penilai_id, $json) {
+    public function updateKinerja($db, $pendaftar_id, $penilai_id, $json, $jml) {
         $affected = $db->table('penilaian')->where('pendaftar_id', $pendaftar_id)
             ->update([
                 'penilai_id' => $penilai_id,
                 'penilaian_kinerja' => $json,
+                'jumlah_artikel' => $jml,
             ]);
         
         return $affected;

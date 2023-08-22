@@ -132,12 +132,21 @@
                             <label class="text-justify subjudul">
                                 b. Memenuhi prisip-prinsip jurnalistik (independensi, cover both sides (disiplin verifikasi dan konfirmasi), tidak SARA, berdasar fakta, akurat (tidak hoax, berdasar fakta)
                             </label>
-                            <p>Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?</p>   
-                            <select class="form-control col-md-8" name="p2_b" id="p2_b">
-                                {% for q in opsi_p2_b %}
-                                    <option value="{{ q.id }}">{{ q.nama }}</option>
-                                {% endfor %}
-                            </select>  
+                            <p>Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <select class="form-control" name="p2_b" id="p2_b">
+                                        {% for q in opsi_p2_b %}
+                                            <option value="{{ q.id }}">{{ q.nama }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <div id="jumlah-artikel" class="jumlah-artikel">
+                                        <input type="number" id="jumlah_artikel" placeholder="Jumlah artikel" class="form-control" min="0" step="any"> 
+                                    </div>
+                                </div>
+                            </div>
                         </div>  
     
                         <div class="col-md-8">
