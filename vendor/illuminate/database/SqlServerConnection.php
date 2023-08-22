@@ -3,6 +3,8 @@
 namespace Illuminate\Database;
 
 use Closure;
+use Doctrine\DBAL\Driver\PDOSqlsrv\Driver as DoctrineDriver;
+use Doctrine\DBAL\Version;
 use Illuminate\Database\PDO\SqlServerDriver;
 use Illuminate\Database\Query\Grammars\SqlServerGrammar as QueryGrammar;
 use Illuminate\Database\Query\Processors\SqlServerProcessor;
@@ -55,28 +57,13 @@ class SqlServerConnection extends Connection
     }
 
     /**
-     * Escape a binary value for safe SQL embedding.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    protected function escapeBinary($value)
-    {
-        $hex = bin2hex($value);
-
-        return "0x{$hex}";
-    }
-
-    /**
      * Get the default query grammar instance.
      *
      * @return \Illuminate\Database\Query\Grammars\SqlServerGrammar
      */
     protected function getDefaultQueryGrammar()
     {
-        ($grammar = new QueryGrammar)->setConnection($this);
-
-        return $this->withTablePrefix($grammar);
+        return $this->withTablePrefix(new QueryGrammar);
     }
 
     /**
@@ -100,9 +87,7 @@ class SqlServerConnection extends Connection
      */
     protected function getDefaultSchemaGrammar()
     {
-        ($grammar = new SchemaGrammar)->setConnection($this);
-
-        return $this->withTablePrefix($grammar);
+        return $this->withTablePrefix(new SchemaGrammar);
     }
 
     /**
@@ -131,10 +116,10 @@ class SqlServerConnection extends Connection
     /**
      * Get the Doctrine DBAL driver.
      *
-     * @return \Illuminate\Database\PDO\SqlServerDriver
+     * @return \Doctrine\DBAL\Driver\PDOSqlsrv\Driver|\Illuminate\Database\PDO\SqlServerDriver
      */
     protected function getDoctrineDriver()
     {
-        return new SqlServerDriver;
+        return class_exists(Version::class) ? new DoctrineDriver : new SqlServerDriver;
     }
 }
