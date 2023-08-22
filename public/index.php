@@ -26,6 +26,10 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $GLOBALS['environment'] = 'local';
     $GLOBALS['basePath'] = '/media';
 }
+else if ($_SERVER['HTTP_HOST'] == 'sdgs-awards.bappenas.go.id') {
+    $GLOBALS['environment'] = 'vps';
+    $GLOBALS['basePath'] = '/modul-media';
+}
 else {
     echo 'Unknown Host!';
     echo $_SERVER['HTTP_HOST'];
