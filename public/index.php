@@ -256,7 +256,7 @@ $app->group('', function (RouteCollectorProxy $group) {
         $obj->link_artikel2 = $param['link_artikel2'];
         $obj->link_artikel3 = $param['link_artikel3'];
 
-        if (isset($param['jumlah_artikel'])) {
+        if (isset($param['jumlah_artikel']) && is_numeric($param['jumlah_artikel'])) {
             $jml = $param['jumlah_artikel'];
         }
         else {
