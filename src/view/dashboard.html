@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <input type="hidden" id="env" value="{{ env }}">    
+
+    <h3 class="important">
+        {{ title }}
+    </h3>
+
+{% endblock %}

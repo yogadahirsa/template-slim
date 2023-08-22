@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+            <link href="{{ base_path() }}/public/css/sb-admin-2.css" rel="stylesheet">
+            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+
+            <link rel="shortcut icon" href="#">
+
+            <!-- google font -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Catamaran&display=swap" rel="stylesheet"> 
+            
+            <title>SDGs - Awards</title>
+            <style>
+                #content {
+                    padding-bottom: 40px;
+                }
+
+                #footer {
+                    position: fixed;
+                    bottom: 0px;
+                    width: 100%;
+                    background-color: white;
+                    text-align: right;
+                    font-size: small;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body id="page-top">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+        <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="sidebar-brand-text mx-2"></div>
+                </a>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <hr class="sidebar-divider">
+
+                <div class="sidebar-heading">DATA</div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsemediadata"
+                        aria-expanded="true" aria-controls="collapsemediadata">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Media</span>
+                    </a>
+                    <div id="collapsemediadata" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ url_for('input') }}">
+                            <span>Input</span>
+                        </a>     
+                    </div>
+                </li>
+
+                <div class="sidebar-heading">JURI TAHAP 1</div>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsemedia" aria-expanded="true" aria-controls="collapsemedia">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Media</span>
+                    </a>
+                    <div id="collapsemedia" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ url_for('penilaian_tahap1') }}"><span>Penilaian</span></a> 
+                        <a class="collapse-item" href="{{ url_for('rekap') }}"><span>Rekapitulasi</span></a>
+                        <a class="collapse-item" href="{{ url_for('nilai') }}"><span>Rekap Nilai</span></a>
+                    </div>
+                </li>
+            </ul>
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
+                <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- Topbar Search -->
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <small><b>Periode Aktif : {{ session.periode.nama }}</b></small>
+                        </form>
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ session.media_nama_lengkap }}</span>
+                                    <img class="img-profile rounded-circle"src="{{ base_path() }}/public/images/logo_sdgs.jpeg">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="{{ url_for('logout') }}">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="container-fluid">
+                        <div id="content">{% block content %}{% endblock %}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

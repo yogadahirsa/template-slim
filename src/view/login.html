@@ -1,0 +1,74 @@
+{% extends "base_plain.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+
+<style>
+    .form-login {
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    .kotak {
+        margin-top: 2rem;
+    }
+    .form-group > input, .btn-user {
+        border-radius: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+</style>
+
+<div class="container">
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg kotak">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url('{{ base_path() }}/public/images/bg-itb3.jpg'); background-size: cover; "></div>
+                        <div class="col-lg-6">
+                            <div class="form-login">
+                                <div class="text-center">
+                                    <center>
+                                        <img src="{{ base_path() }}/public/images/logoc.png" class="img" style="width: 60%;">
+                                    </center>
+                                    <br>
+                                    <h1 class="h4 text-gray-900 mb-4">ADMIN LOGIN</h1>
+                                </div>
+                                 
+                                <form class="user" action="{{ url_for('post-login') }}" method="post">
+                                    <br>
+                                    <div class="form-group">
+                                        <input type="text" name="usr" class="form-control form-control-user"
+                                            id="exampleInputEmail" aria-describedby="emailHelp"
+                                            placeholder="Username" autocomplete="off" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="pwd" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="Password" autocomplete="off" required>
+                                    </div>
+                                   
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        Login
+                                    </button>
+                                </form>
+                                <hr>
+                                <div class="text-center seknas">
+                                   <b>Sekretariat Nasional SDGs <br> Kementerian PPN/Bappenas</b>
+                                   <br>
+                                   <b>2022</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

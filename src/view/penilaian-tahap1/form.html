@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <style>
+        .redColor {
+            color: red;
+        }
+        .toscaColor{
+            background-color: #36b9cc;
+            color: white;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <input type="hidden" id="env" value="{{ env }}">
+    <input type="hidden" id="mid" value="{{ id }}"> 
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-penilaian" tabindex="-1" role="dialog" aria-labelledby="modal-penilai-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-penilai-label"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody id="my-body"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-tambah">Close</button>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-sukses" tabindex="-1" role="dialog" aria-labelledby="modal-sukses-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-sukses-label">Sukses</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        Data Berhasil di simpan!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-sukses">Close</button>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+
+    <!-- FORM -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary float-left">Penilaian Komitmen dan Kualitatif : <strong>{{ detail.nama_resmi }}</strong></h6>
+            <h6 class="m-0 font-weight-bold text-primary float-right"><a href="{{ back }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i></a></h6>
+        </div>
+        <div class="box box-info">
+            <div class="card-body">    
+                <b style="font-size: 18;">1. Komitmen</b>
+                <hr>
+                <!-- 1A --------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="col-md-12">
+                    <label>  
+                        <b> a. Kebijakan redaksional untuk memberitakan isu terkait SDGs? (keywords SDGs/SDG, pembangunan berkelanjutan)</b>
+                        <br>
+                        Apakah institusi media memberitakan isu terkait SDGs? 
+                    </label>
+                    <br>
+                    
+                    <small class="redColor">
+                        Jawaban:
+                    </small>
+                    {% for opsi in opsi_p1_a %}
+                        {% if opsi.id == penilaian_kinerja.p1_a %}
+                            {{ opsi.nama }}
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <small class="redColor">
+                        File Pendukung :
+                    </small>
+                    <a href="{{ dir }}/public/upload/{{ penilaian_kinerja.lamp_p1_a }}" target="_blank">{{ penilaian_kinerja.lamp_p1_a }}</a>
+                    <br>
+    
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-lg-2">
+                            <label><small>Auto System :</small></label>
+                            <select class="form-control" disabled>
+                                <option value="{{ penilaian_kinerja.p1_a }}">{{ penilaian_kinerja.p1_a }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label><small><a class="detail-penilaian" data-jenis="p1_a">
+                                Juri Dapur :
+                                <i style="margin-top:5;color:#b30024" data-bs-html="true" class="text-left fa fa-info-circle icon-background2"></i>
+                            </a></small></label>
+                            <i style="margin-top:5px; text-align: left; color: #FFCC00;" data-bs-html="true" class="text-left fa fa-info-circle float-right icon-background2 waves-effect" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ title_p1_a }}"></i>
+                            <select class="form-control toscaColor" name="p1_a" id="p1_a">
+                                <option value="0">Pilih</option>
+                                {% for opsi in opsi_p1_a %}
+                                    {% if penjurian.p1_a == opsi.id %}
+                                        <option value="{{ opsi.id }}" selected>{{ opsi.id }}</option>
+                                    {% else %}
+                                        <option value="{{ opsi.id }}">{{ opsi.id }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- 1B --------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="col-md-12">
+                    <label>  
+                        <b> b. Konsisten redaksional untuk memberitakan isu terkait SDGs? </b>
+                        <br>
+                        Seberapa konsisten perusahaan memberitakan isu terkait SDGs?
+                    </label>
+                    <br>
+                    
+                    <small class="redColor">
+                        Jawaban:
+                    </small>
+                    {% for opsi in opsi_p1_b %}
+                        {% if opsi.id == penilaian_kinerja.p1_b %}
+                            {{ opsi.nama }}
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <small class="redColor">
+                        File Pendukung :
+                    </small>
+                    <a href="{{ dir }}/public/upload/{{ penilaian_kinerja.lamp_p1_b }}" target="_blank">{{ penilaian_kinerja.lamp_p1_b }}</a>
+                    <br>
+    
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-lg-2">
+                            <label><small>Auto System :</small></label>
+                            <select class="form-control" disabled>
+                                <option value="{{ penilaian_kinerja.p1_b }}">{{ penilaian_kinerja.p1_b }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label><small><a class="detail-penilaian" data-jenis="p1_b">
+                                Juri Dapur :
+                                <i style="margin-top:5;color:#b30024" data-bs-html="true" class="text-left fa fa-info-circle icon-background2"></i>
+                            </a></small></label>
+                            <i style="margin-top:5px; text-align: left; color: #FFCC00;" data-bs-html="true" class="text-left fa fa-info-circle float-right icon-background2 waves-effect" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ title_p1_b }}"></i>
+                            <select class="form-control toscaColor" name="p1_b" id="p1_b">
+                                <option value="0">Pilih</option>
+                                {% for opsi in opsi_p1_b %}
+                                    {% if penjurian.p1_b == opsi.id %}
+                                        <option value="{{ opsi.id }}" selected>{{ opsi.id }}</option>
+                                    {% else %}
+                                        <option value="{{ opsi.id }}">{{ opsi.id }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- 2A --------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <b style="font-size: 18;">2. Kualitatif</b>
+                <hr>
+                <div class="col-md-12">
+                    <label>  
+                        <b>a. Isu SDGs yang diangkat berkaitan dengan tema (Keywords: SDGs, SDG, Air, Energi, Pertanian, Pangen Berkelanjutan). Apakah isu SDGs yang diangkat berkaitan dengan tema? </b>
+                        <br>
+                        Apakah Isu SDGs yang diangkat memuat 4 pilar?
+                    </label>
+                    <br>
+                    
+                    <small class="redColor">
+                        Jawaban:
+                    </small>
+                    {% for opsi in opsi_p2_a %}
+                        {% if opsi.id == penilaian_kinerja.p2_a %}
+                            {{ opsi.nama }}
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+    
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-lg-2">
+                            <label><small>Auto System :</small></label>
+                            <select class="form-control" disabled>
+                                <option value="{{ penilaian_kinerja.p2_a }}">{{ penilaian_kinerja.p2_a }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label><small><a class="detail-penilaian" data-jenis="p2_a">
+                                Juri Dapur :
+                                <i style="margin-top:5;color:#b30024" data-bs-html="true" class="text-left fa fa-info-circle icon-background2"></i>
+                            </a></small></label>
+                            <i style="margin-top:5px; text-align: left; color: #FFCC00;" data-bs-html="true" class="text-left fa fa-info-circle float-right icon-background2 waves-effect" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ title_p2_a }}"></i>
+                            <select class="form-control toscaColor" name="p2_a" id="p2_a">
+                                <option value="0">Pilih</option>
+                                {% for opsi in opsi_p2_a %}
+                                    {% if penjurian.p2_a == opsi.id %}
+                                        <option value="{{ opsi.id }}" selected>{{ opsi.id }}</option>
+                                    {% else %}
+                                        <option value="{{ opsi.id }}">{{ opsi.id }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- 2B --------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="col-md-12">
+                    <label>  
+                        <b>b. Memenuhi prisip-prinsip jurnalistik (independensi, cover both sides (disiplin verifikasi dan konfirmasi), tidak SARA, berdasar fakta, akurat (tidak hoax, berdasar fakta)</b>
+                        <br>
+                        Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?
+                    </label>
+                    <br>
+                    
+                    <small class="redColor">
+                        Jawaban:
+                    </small>
+                    {% for opsi in opsi_p2_b %}
+                        {% if opsi.id == penilaian_kinerja.p2_b %}
+                            {{ opsi.nama }}
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <small class="redColor">
+                        Link artikel :
+                    </small>
+                    <br>
+                    <div class="input-group blueColorBiasa">
+                        <a href="{{ penilaian_kinerja.link_artikel1 }}" target="_blank">{{ penilaian_kinerja.link_artikel1 }}</a>
+                    </div>
+                    <div class="input-group blueColorBiasa">
+                        <a href="{{ penilaian_kinerja.link_artikel2 }}" target="_blank">{{ penilaian_kinerja.link_artikel2 }}</a>
+                    </div>
+                    <div class="input-group blueColorBiasa">
+                        <a href="{{ penilaian_kinerja.link_artikel3 }}" target="_blank">{{ penilaian_kinerja.link_artikel3 }}</a>
+                    </div>
+    
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-lg-2">
+                            <label><small>Auto System :</small></label>
+                            <select class="form-control" disabled>
+                                <option value="{{ penilaian_kinerja.p2_a }}">{{ penilaian_kinerja.p2_b }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label><small><a class="detail-penilaian" data-jenis="p2_b">
+                                Juri Dapur :
+                                <i style="margin-top:5;color:#b30024" data-bs-html="true" class="text-left fa fa-info-circle icon-background2"></i>
+                            </a></small></label>
+                            <i style="margin-top:5px; text-align: left; color: #FFCC00;" data-bs-html="true" class="text-left fa fa-info-circle float-right icon-background2 waves-effect" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ title_p2_b }}"></i>
+                            <select class="form-control toscaColor" name="p2_b" id="p2_b">
+                                <option value="0">Pilih</option>
+                                {% for opsi in opsi_p2_b %}
+                                    {% if penjurian.p2_b == opsi.id %}
+                                        <option value="{{ opsi.id }}" selected>{{ opsi.id }}</option>
+                                    {% else %}
+                                        <option value="{{ opsi.id }}">{{ opsi.id }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <!-- 2C --------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <div class="col-md-12">
+                    <label>  
+                        <b>c. Terdapat partisipasi dan transparansi dengan pembaca (catatan: ditanyakan dalam wawancara) </b>
+                        <br>
+                        Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?
+                    </label>
+                    <br>
+                    
+                    <small class="redColor">
+                        Jawaban:
+                    </small>
+                    {% for opsi in opsi_p2_c %}
+                        {% if opsi.id == penilaian_kinerja.p2_c %}
+                            {{ opsi.nama }}
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <small class="redColor">
+                        File Pendukung :
+                    </small>
+                    <a href="{{ dir }}/public/upload/{{ penilaian_kinerja.lamp_p2_c }}" target="_blank">{{ penilaian_kinerja.lamp_p2_c }}</a>
+                    <br>
+    
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-lg-2">
+                            <label><small>Auto System :</small></label>
+                            <select class="form-control" disabled>
+                                <option value="{{ penilaian_kinerja.p2_c }}">{{ penilaian_kinerja.p2_c }}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label><small><a class="detail-penilaian" data-jenis="p2_c">
+                                Juri Dapur :
+                                <i style="margin-top:5;color:#b30024" data-bs-html="true" class="text-left fa fa-info-circle icon-background2"></i>
+                            </a></small></label>
+                            <i style="margin-top:5px; text-align: left; color: #FFCC00;" data-bs-html="true" class="text-left fa fa-info-circle float-right icon-background2 waves-effect" data-toggle="tooltip" data-placement="right" data-html="true" title="{{ title_p2_c }}"></i>
+                            <select class="form-control toscaColor" name="p2_c" id="p2_c">
+                                <option value="0">Pilih</option>
+                                {% for opsi in opsi_p2_c %}
+                                    {% if penjurian.p2_c == opsi.id %}
+                                        <option value="{{ opsi.id }}" selected>{{ opsi.id }}</option>
+                                    {% else %}
+                                        <option value="{{ opsi.id }}">{{ opsi.id }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+                <div class="text-center">
+                    <a href="{{ back }}" type="button" class="btn btn-warning btn-sm" id="back"><span class="fa fa-send"></span>&nbsp;Back</a>
+                    <button type="button" class="btn btn-primary btn-sm" id="submit"><span class="fa fa-send"></span>&nbsp;Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../public/js/appPenilaianForm.js"></script>
+{% endblock %}

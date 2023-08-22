@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+    <style>
+        .subjudul {
+            font-style: italic;
+        }
+        .link-artikel {
+            margin-top: 5px;
+        }
+        .lampiran {
+            background-color: blanchedalmond;
+            border: 1px solid #6e707e;
+            border-radius: 5px;
+            margin: 10px;
+            padding-top: 5px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <input type="hidden" id="env" value="{{ env }}">
+    <input type="hidden" id="media_id" value="{{ id }}">
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-sukses" tabindex="-1" role="dialog" aria-labelledby="modal-sukses-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modal-sukses-label">Sukses</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+                <div class="modal-body">
+                    <div class="alert alert-success">
+                        Data Berhasil di simpan!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-sukses">Close</button>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!--  -->
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary float-left">Komitmen & Kualitatif</h6>
+        </div>
+        <div class="box box-info">
+            <div class="card-body">
+                <form id="form-kinerja" action="post" enctype="multipart/form-data">  
+                    <label class="col-md-12"><b>1. KOMITMEN</b></label>
+                    <div class="form-group col-md-12">     
+                        <div class="col-md-12">
+                            <label class="text-justify subjudul">
+                                a. Kebijakan redaksional untuk memberitakan isu terkait SDGs? (keywords SDGs/SDG, pembangunan berkelanjutan)
+                            </label>
+                            <p>Apakah institusi media memberitakan isu terkait SDGs?</p>   
+                            <select class="form-control col-md-8" name="p1_a" id="p1_a">
+                                {% for q in opsi_p1_a %}
+                                    <option value="{{ q.id }}">{{ q.nama }}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>  
+    
+                        <div style="display:none;" id="file_p1_a" class="col-md-8 lampiran">
+                            <div class="">
+                                <div id="uploaded_lamp_p1_a"></div>
+                                <label>Screenshoot*<span style="color: red"> (.png/.jpg/.jpeg)</span></label>
+                                <br>
+                                <label for="lamp_p1_a"><span></span> 
+                                    <strong>Pilih File: </strong>
+                                </label>
+                                <input type="file" name="lamp_p1_a" id="lamp_p1_a" class="inputfile inputfile-6" accept=".png, .jpg, .jpeg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">     
+                        <div class="col-md-12">
+                            <label class="text-justify subjudul">
+                                b. Konsisten redaksional untuk memberitakan isu terkait SDGs?
+                            </label>
+                            <p>Seberapa konsisten perusahaan memberitakan isu terkait SDGs?</p>   
+                            <select class="form-control col-md-8" name="p1_b" id="p1_b">
+                                {% for q in opsi_p1_b %}
+                                    <option value="{{ q.id }}">{{ q.nama }}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>  
+    
+                        <div style="display:none;" id="file_p1_b" class="col-md-8 lampiran">
+                            <div class="">
+                                <div id="uploaded_lamp_p1_b"></div>
+                                <label >Screenshoot*<span style="color: red"> (.png/.jpg/.jpeg)</span></label>
+                                <br>
+                                <label for="lamp_p1_b"><span></span> 
+                                    <strong>Pilih File: </strong>
+                                </label>
+                                <input type="file" name="lamp_p1_b" id="lamp_p1_b" class="inputfile inputfile-6" accept=".png, .jpg, .jpeg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ------------------------------------------------------------------------------------------- -->
+                    <br>
+                    <hr>
+                    <br>
+
+                    <label class="col-md-12"><b>2. KUALITATIF</b></label>
+                    
+                    <div class="form-group col-md-12">     
+                        <div class="col-md-12">
+                            <label class="text-justify subjudul">
+                                a. Isu SDGs yang diangkat berkaitan dengan tema (Keywords: SDGs, SDG, Air, Energi, Pertanian, Pangen Berkelanjutan). Apakah isu SDGs yang diangkat berkaitan dengan tema?
+                            </label>
+                            <p>Apakah Isu SDGs yang diangkat memuat 4 pilar?</p>   
+                            <select class="form-control col-md-8" name="p2_a" id="p2_a">
+                                {% for q in opsi_p2_a %}
+                                    <option value="{{ q.id }}">{{ q.nama }}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>  
+                    </div>
+
+                    <div class="form-group col-md-12">     
+                        <div class="col-md-12">
+                            <label class="text-justify subjudul">
+                                b. Memenuhi prisip-prinsip jurnalistik (independensi, cover both sides (disiplin verifikasi dan konfirmasi), tidak SARA, berdasar fakta, akurat (tidak hoax, berdasar fakta)
+                            </label>
+                            <p>Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?</p>   
+                            <select class="form-control col-md-8" name="p2_b" id="p2_b">
+                                {% for q in opsi_p2_b %}
+                                    <option value="{{ q.id }}">{{ q.nama }}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>  
+    
+                        <div class="col-md-8">
+                            <div id="link-artikel1" class="link-artikel">
+                                <input  type="text" id="link_artikel1" placeholder="Link artikel 1" class="form-control"> 
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="link-artikel2" class="link-artikel">
+                                <input  type="text" id="link_artikel2" placeholder="Link artikel 2" class="form-control"> 
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="link-artikel3" class="link-artikel">
+                                <input  type="text" id="link_artikel3" placeholder="Link artikel 3" class="form-control"> 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">     
+                        <div class="col-md-12">
+                            <label class="text-justify subjudul">
+                                c. Terdapat partisipasi dan transparansi dengan pembaca (catatan: ditanyakan dalam wawancara)
+                            </label>
+                            <p>Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?</p>   
+                            <select class="form-control col-md-8" name="p2_c" id="p2_c">
+                                {% for q in opsi_p2_c %}
+                                    <option value="{{ q.id }}">{{ q.nama }}</option>
+                                {% endfor %}
+                            </select>  
+                        </div>
+
+                        <div style="display:none;" id="file_p2_c" class="col-md-8 lampiran">
+                            <div class="col-md-12">
+                                <div id="uploaded_lamp_p2_c"></div>
+                                <label >Screenshoot*<span style="color: red"> (.png/.jpg/.jpeg)</span></label>
+                                <br>
+                                <label for="lamp_p2_c"><span></span> 
+                                    <strong>Pilih File: </strong>
+                                </label>
+                                <input type="file" name="lamp_p2_c" id="lamp_p2_c" class="inputfile inputfile-6" accept=".png, .jpg, .jpeg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-warning btn-sm" id="back"><span class="fa fa-send"></span>&nbsp;Back</button>
+                        <button type="submit" class="btn btn-primary btn-sm"><span class="fa fa-send"></span>&nbsp;Submit</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="{{ base_path() }}/public/js/appForm.js"></script>
+{% endblock %}
