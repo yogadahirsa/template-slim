@@ -522,4 +522,5 @@ $app->get('/get_penjurian_by_mid/{mid}', function (Request $request, Response $r
     return $response->withHeader('Content-Type', 'application/json');
 })->setName('get_penjurian_by_mid');
 
+
 $app->run();

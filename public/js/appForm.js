@@ -135,6 +135,7 @@ function initForm(re) {
     }
 }
 
+
 $(document).ready(function() {
     $("#form-kinerja").submit(function(ev) {
         ev.preventDefault();
