@@ -3,6 +3,65 @@
 {% block title %}{{ title }}{% endblock %}
 {% block head %}
     {{ parent() }}
+    <style>
+        .card-box {
+            cursor:pointer;
+            position: relative;
+            color: #fff;
+            padding: 20px 10px 40px;
+            margin: 20px 0px;
+            border-radius: 10px;
+        }
+        .card-box:hover {
+            text-decoration: none;
+            color: #f1f1f1;
+        }
+        .card-box:hover .icon i {
+            font-size: 100px;
+            transition: 1s;
+            -webkit-transition: 1s;
+        }
+        .card-box .inner {
+            padding: 5px;
+        }
+        .card-box h4 {
+            font-size: 27px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            white-space: nowrap;
+            padding: 0;
+            text-align: left;
+        }
+        .card-box p {
+            font-size: 15px;
+        }
+        .card-box .icon {
+            position: absolute;
+            top: auto;
+            bottom: 5px;
+            right: 5px;
+            z-index: 0;
+            font-size: 72px;
+            color: rgba(0, 0, 0, 0.15);
+        }
+        .card-box .card-box-footer {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            text-align: center;
+            padding: 3px 0;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-decoration: none;
+        }
+        .card-box:hover .card-box-footer {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-yellow {
+            background-color: skyblue !important;
+        }
+    </style>
 {% endblock %}
 {% block content %}
     <input type="hidden" id="env" value="{{ env }}">    
@@ -10,5 +69,17 @@
     <h3 class="important">
         {{ title }}
     </h3>
+
+    <div class="col-lg-3 col-sm-6">
+        <div class="card-box bg-yellow">
+            <div class="inner">
+                <h3> {{ jumlah }}/{{ jumlah }} </h3>
+                <p>Media</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user"></i>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

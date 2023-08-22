@@ -20,3 +20,5 @@ CREATE TABLE `penjurian` (
 fadlanmuzakki@Gmail.com:539516
 
 alter table penjurian add is_accepted smallint(3) default 1;
+
+alter table penilaian add jumlah_artikel int(7) default 0;

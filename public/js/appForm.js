@@ -69,9 +69,10 @@ function validasi() {
         jsonData.append('link_artikel1', $("#link_artikel1").val());
         jsonData.append('link_artikel2', $("#link_artikel2").val());
         jsonData.append('link_artikel3', $("#link_artikel3").val());
+        jsonData.append('jumlah_artikel', $("#jumlah_artikel").val());
         jsonData.append('mid', mid);
 
-        console.log(jsonData)
+        // console.log(jsonData)
 
         let apiPost = new Api(env,'post_form_kinerja','POST',jsonData);
         let res = apiPost.ajaxRequestFile();
@@ -87,7 +88,7 @@ function validasi() {
 function initForm(re) {
     var dt = re.data;
     const penilaian = JSON.parse(dt.penilaian_kinerja);
-    console.log(penilaian)
+    // console.log(penilaian)
 
     $("#p1_a").val(penilaian.p1_a);
     $("#p1_a").trigger('change');
@@ -97,6 +98,7 @@ function initForm(re) {
     $("#p2_b").val(penilaian.p2_b);
     $("#p2_c").val(penilaian.p2_c);
     $("#p2_c").trigger('change');
+    $("#jumlah_artikel").val(dt.jumlah_artikel);
 
     let root = re.uri;
     let sp = root.split('/');
