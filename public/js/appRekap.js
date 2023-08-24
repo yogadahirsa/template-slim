@@ -66,9 +66,9 @@ function refreshModalBody(mid) {
                     }
                 }
             }
-            tmp += `<td>${komitmen}</td>`;
-            tmp += `<td>${kualitatif}</td>`;
-            tmp += `<td>${komitmen+kualitatif}</td>`;
+            tmp += `<td>${komitmen.toFixed(2)}</td>`;
+            tmp += `<td>${kualitatif.toFixed(2)}</td>`;
+            tmp += `<td>${(komitmen+kualitatif).toFixed(2)}</td>`;
             tmp += `<tr>`;
         });
     }
