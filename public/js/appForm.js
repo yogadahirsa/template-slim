@@ -72,12 +72,12 @@ function validasi() {
         jsonData.append('jumlah_artikel', $("#jumlah_artikel").val());
         jsonData.append('mid', mid);
 
-        // console.log(jsonData)
+        console.log(jsonData)
 
         let apiPost = new Api(env,'post_form_kinerja','POST',jsonData);
         let res = apiPost.ajaxRequestFile();
 
-        // console.log(res)
+        console.log(res)
 
         if (res.status) {
             $("#modal-sukses").modal('show');
