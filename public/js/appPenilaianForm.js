@@ -33,14 +33,14 @@ function refreshBodyModal(re, tipe) {
         var tmp;
         re.forEach(function(el, idx) {
             const pj = JSON.parse(el.penjurian);
-            tmp += `<td>${parseInt(idx)+1}</td>`;
+            tmp += `<tr><td>${parseInt(idx)+1}</td>`;
             tmp += `<td>${el.nama_lengkap}</td>`;
-            tmp += `<td>${pj[tipe]}</td>`;
+            tmp += `<td>${pj[tipe]}</td></tr>`;
         });
     }
 
     else {
-        var tmp = `<td colspan="3">Empty data</td>`
+        var tmp = `<tr><td colspan="3">Empty data</td></tr>`;
     }
     $("#my-body").empty();
     $("#my-body").append(tmp);

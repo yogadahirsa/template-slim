@@ -17,6 +17,10 @@
             margin: 10px;
             padding-top: 5px;
         }
+        .artikel {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -85,12 +89,13 @@
                             <label class="text-justify subjudul">
                                 b. Konsisten redaksional untuk memberitakan isu terkait SDGs?
                             </label>
-                            <p>Seberapa konsisten perusahaan memberitakan isu terkait SDGs?</p>   
+                            <p>Seberapa konsisten perusahaan memberitakan isu terkait SDGs?</p>
                             <select class="form-control col-md-8" name="p1_b" id="p1_b">
                                 {% for q in opsi_p1_b %}
                                     <option value="{{ q.id }}">{{ q.nama }}</option>
                                 {% endfor %}
-                            </select>  
+                            </select>
+                            </div>
                         </div>  
     
                         <div style="display:none;" id="file_p1_b" class="col-md-8 lampiran">
@@ -107,23 +112,31 @@
                     </div>
 
                     <!-- ------------------------------------------------------------------------------------------- -->
-                    <br>
                     <hr>
                     <br>
 
                     <label class="col-md-12"><b>2. KUALITATIF</b></label>
-                    
                     <div class="form-group col-md-12">     
                         <div class="col-md-12">
                             <label class="text-justify subjudul">
-                                a. Isu SDGs yang diangkat berkaitan dengan tema (Keywords: SDGs, SDG, Air, Energi, Pertanian, Pangen Berkelanjutan). Apakah isu SDGs yang diangkat berkaitan dengan tema?
+                                a. Isu SDGs yang diangkat berkaitan dengan tema (Keywords: SDGs, SDG, Air, Energi, Pertanian, Pangan Berkelanjutan). Apakah isu SDGs yang diangkat berkaitan dengan tema?
                             </label>
                             <p>Apakah Isu SDGs yang diangkat memuat 4 pilar?</p>   
-                            <select class="form-control col-md-8" name="p2_a" id="p2_a">
-                                {% for q in opsi_p2_a %}
-                                    <option value="{{ q.id }}">{{ q.nama }}</option>
-                                {% endfor %}
-                            </select>  
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <select class="form-control" name="p2_a" id="p2_a">
+                                        {% for q in opsi_p2_a %}
+                                            <option value="{{ q.id }}">{{ q.nama }}</option>
+                                        {% endfor %}
+                                    </select>  
+                                </div>
+                                <div class="col-md-4 artikel">
+                                    <label for="jumlah-artikel"><small>Jumlah artikel:&nbsp;</small></label>
+                                    <div id="jumlah-artikel" class="jumlah-artikel">
+                                        <input type="number" id="jumlah_artikel" placeholder="Jumlah artikel" class="form-control" min="0" step="any"> 
+                                    </div>
+                                </div>
+                            </div>
                         </div>  
                     </div>
 
@@ -134,17 +147,12 @@
                             </label>
                             <p>Apakah laporan jurnalistik yang disampaikan telah memenuhi prinsip-prinsip jurnalistik?</p>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <select class="form-control" name="p2_b" id="p2_b">
                                         {% for q in opsi_p2_b %}
                                             <option value="{{ q.id }}">{{ q.nama }}</option>
                                         {% endfor %}
                                     </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <div id="jumlah-artikel" class="jumlah-artikel">
-                                        <input type="number" id="jumlah_artikel" placeholder="Jumlah artikel" class="form-control" min="0" step="any"> 
-                                    </div>
                                 </div>
                             </div>
                         </div>  
@@ -198,7 +206,7 @@
                         <button type="button" class="btn btn-warning btn-sm" id="back"><span class="fa fa-send"></span>&nbsp;Back</button>
                         <button type="submit" class="btn btn-primary btn-sm"><span class="fa fa-send"></span>&nbsp;Submit</button>
                     </div>
-                    
+                    <br>
                 </form>
             </div>
         </div>
