@@ -29,7 +29,8 @@ function prosesHitung(arr) {
                 else {
                     param.forEach(el2 => {
                         if (el2.id == value) {
-                            let hitung = value*el2.bobot/100;
+                            let hitung = (value*el2.bobot)/100;
+                            // hitung = hitung.toFixed(2);
                             if (key == 'p1_a') p1 += hitung;
                             else if (key == 'p1_b') p2 += hitung;
                             else if (key == 'p2_a') p3 += hitung;
@@ -44,12 +45,12 @@ function prosesHitung(arr) {
 
     result += `<td>${p1}</td>`;
     result += `<td>${p2}</td>`;
-    result += `<td>${p1+p2}</td>`;
+    result += `<td>${(p1+p2).toFixed(2)}</td>`;
     result += `<td>${p3}</td>`;
     result += `<td>${p4}</td>`;
     result += `<td>${p5}</td>`;
-    result += `<td>${p3+p4+p5}</td>`;
-    result += `<td>${p1+p2+p3+p4+p5}</td>`;
+    result += `<td>${(p3+p4+p5).toFixed(2)}</td>`;
+    result += `<td>${(p1+p2+p3+p4+p5).toFixed(2)}</td>`;
     
     return result;
 }
