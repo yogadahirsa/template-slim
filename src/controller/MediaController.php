@@ -45,7 +45,7 @@ class MediaController {
     public function getListBulk($db) {
         $result = [];
         $result = $db->table('pendaftar')
-            ->select('pendaftar.id','pendaftar.nama_resmi','penilaian.penilaian_kinerja','penjurian.tahap','penjurian.penjurian','user.nama_lengkap')
+            ->select('pendaftar.id','pendaftar.nama_resmi','penilaian.penilaian_kinerja','penilaian.jumlah_artikel','penjurian.tahap','penjurian.penjurian','user.nama_lengkap')
             ->leftJoin('penilaian','pendaftar.id','penilaian.pendaftar_id')
             ->leftJoin('penjurian', function ($join) {
                 $join->on('penjurian.pendaftar_id', '=', 'pendaftar.id')
